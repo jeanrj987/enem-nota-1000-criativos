@@ -21,3 +21,13 @@ npm run render:video   # out/video/nota-640-vertical.mp4 (1080x1920, 30 fps, 40 
 ```
 
 Uma cena por slide, com os elementos entrando em sequência e fade entre as cenas. Reaproveita os mesmos componentes dos PNGs (`src/Video.tsx`); a duração de cada cena fica em `src/slides/lista.ts`.
+
+## Vídeo curto com música (21,5 s)
+
+```bash
+npm run render:video-curto              # out/video/nota-640-curto.mp4 (com música)
+npm run render:video-curto-sem-musica   # out/video/nota-640-curto-sem-musica.mp4
+npm run gerar:musica                    # regera public/musica-fundo.mp3 (trilha original por síntese)
+```
+
+Seis cenas (gancho, dor, solução, benefícios, oferta e CTA) pensadas para narração por cima. Roteiro de locução e tempos em `roteiro-locucao.md`. As cenas e suas durações ficam em `CENAS_CURTAS` (`src/slides/lista.ts`).

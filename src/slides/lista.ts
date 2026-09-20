@@ -24,3 +24,21 @@ export const SLIDES: ReadonlyArray<{ id: string; componente: React.FC; frames: n
 ];
 
 export const DURACAO_TOTAL_FRAMES = SLIDES.reduce((soma, s) => soma + s.frames, 0);
+
+export type Cena = { id: string; frames: number };
+
+// Versão curta (~21 s), pensada para narração por cima: gancho, dor, solução,
+// benefícios, oferta e CTA. Cada cena dá tempo de a locução ler o texto da tela.
+export const CENAS_CURTAS: ReadonlyArray<Cena> = [
+  { id: "slide-01", frames: 90 },
+  { id: "slide-03", frames: 120 },
+  { id: "slide-06", frames: 105 },
+  { id: "slide-07", frames: 120 },
+  { id: "slide-09", frames: 90 },
+  { id: "slide-10", frames: 120 },
+];
+
+export const CENAS_COMPLETAS: ReadonlyArray<Cena> = SLIDES.map(({ id, frames }) => ({ id, frames }));
+
+export const somarFrames = (cenas: ReadonlyArray<Cena>): number =>
+  cenas.reduce((soma, c) => soma + c.frames, 0);

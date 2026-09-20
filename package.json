@@ -8,6 +8,7 @@
   "dependencies": {
     "@remotion/cli": "4.0.526",
     "@remotion/google-fonts": "^4.0.526",
+    "@remotion/media": "4.0.526",
     "@remotion/tailwind-v4": "4.0.526",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -27,7 +28,10 @@
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "render:carrossel": "node scripts/renderizar.mjs",
+    "gerar:musica": "node scripts/gerar-musica.mjs && remotion ffmpeg -y -i public/musica-fundo.wav -codec:a libmp3lame -b:a 192k public/musica-fundo.mp3",
     "render:video": "remotion render src/index.ts video-tiktok out/video/nota-640-vertical.mp4",
+    "render:video-curto": "remotion render src/index.ts video-curto out/video/nota-640-curto.mp4",
+    "render:video-curto-sem-musica": "remotion render src/index.ts video-curto-sem-musica out/video/nota-640-curto-sem-musica.mp4",
     "lint": "eslint src && tsc"
   },
   "sideEffects": [
