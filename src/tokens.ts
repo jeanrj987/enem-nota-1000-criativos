@@ -20,3 +20,4 @@ export const ALTURA = 1350;
 export const MARGEM = 84;
 
 export const TOTAL_SLIDES = 10;
+export const ALTURA_TIKTOK = 1920;

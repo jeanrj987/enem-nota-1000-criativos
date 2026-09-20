@@ -1,7 +1,7 @@
 import "./index.css";
 import React from "react";
 import { Still } from "remotion";
-import { ALTURA, LARGURA } from "./tokens";
+import { ALTURA, ALTURA_TIKTOK, LARGURA } from "./tokens";
 import { Slide01Capa, Slide02Peso, Slide03Cursinho, Slide04Competencia5 } from "./slides/parte1";
 import {
   Slide05Identificacao,
@@ -26,10 +26,24 @@ const SLIDES: ReadonlyArray<{ id: string; componente: React.FC }> = [
   { id: "slide-10", componente: Slide10Cta },
 ];
 
+// Feed (Instagram/Facebook) em 4:5 e TikTok em 9:16, com o mesmo conteúdo.
+const FORMATOS: ReadonlyArray<{ prefixo: string; altura: number }> = [
+  { prefixo: "slide", altura: ALTURA },
+  { prefixo: "tiktok", altura: ALTURA_TIKTOK },
+];
+
 export const RemotionRoot: React.FC = () => (
   <>
-    {SLIDES.map(({ id, componente }) => (
-      <Still key={id} id={id} component={componente} width={LARGURA} height={ALTURA} />
-    ))}
+    {FORMATOS.flatMap(({ prefixo, altura }) =>
+      SLIDES.map(({ id, componente }) => (
+        <Still
+          key={prefixo + id}
+          id={id.replace("slide", prefixo)}
+          component={componente}
+          width={LARGURA}
+          height={altura}
+        />
+      )),
+    )}
   </>
 );

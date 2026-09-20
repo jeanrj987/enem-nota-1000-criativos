@@ -1,12 +1,17 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, useVideoConfig } from "remotion";
 import { KARLA } from "../fonts";
-import { ALTURA, COR, LARGURA, MARGEM, TOTAL_SLIDES } from "../tokens";
+import { ALTURA, COR, MARGEM, TOTAL_SLIDES } from "../tokens";
 
 type Props = {
   numero: number;
   children: React.ReactNode;
 };
+
+// Áreas livres de cada formato. No TikTok a legenda e os botões cobrem a base
+// e o lado direito, então o conteúdo sobe e ganha uma margem direita maior.
+const ZONA_FEED = { topo: 160, base: 150, direita: MARGEM, dica: 60 };
+const ZONA_TIKTOK = { topo: 240, base: 460, direita: 150, dica: 400 };
 
 const Progresso: React.FC<{ numero: number }> = ({ numero }) => (
   <div style={{ display: "flex", gap: 8, width: 300 }}>
@@ -25,59 +30,65 @@ const Progresso: React.FC<{ numero: number }> = ({ numero }) => (
 );
 
 // Fundo, marca, progresso e dica de "arraste" comuns a todos os slides.
-export const Moldura: React.FC<Props> = ({ numero, children }) => (
-  <AbsoluteFill
-    style={{
-      background: `radial-gradient(900px 600px at 100% 0%, #10244a 0%, ${COR.papel} 60%)`,
-      fontFamily: KARLA,
-      color: COR.tinta,
-      width: LARGURA,
-      height: ALTURA,
-    }}
-  >
-    <div
+export const Moldura: React.FC<Props> = ({ numero, children }) => {
+  const { width, height } = useVideoConfig();
+  const zona = height > ALTURA ? ZONA_TIKTOK : ZONA_FEED;
+  const topoMarca = height > ALTURA ? 150 : 64;
+
+  return (
+    <AbsoluteFill
       style={{
-        position: "absolute",
-        top: 64,
-        left: MARGEM,
-        right: MARGEM,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        fontSize: 30,
-        fontWeight: 800,
+        background: `radial-gradient(900px 600px at 100% 0%, #10244a 0%, ${COR.papel} 60%)`,
+        fontFamily: KARLA,
+        color: COR.tinta,
+        width,
+        height,
       }}
     >
-      <span>
-        Nota 1000 <span style={{ color: COR.azul }}>AI</span>
-      </span>
-      <Progresso numero={numero} />
-    </div>
-    <div
-      style={{
-        position: "absolute",
-        top: 160,
-        bottom: 150,
-        left: MARGEM,
-        right: MARGEM,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      {children}
-    </div>
-    <div
-      style={{
-        position: "absolute",
-        bottom: 60,
-        right: MARGEM,
-        fontSize: 32,
-        fontWeight: 700,
-        color: COR.fraca,
-      }}
-    >
-      {numero < TOTAL_SLIDES ? "Arraste →" : ""}
-    </div>
-  </AbsoluteFill>
-);
+      <div
+        style={{
+          position: "absolute",
+          top: topoMarca,
+          left: MARGEM,
+          right: zona.direita,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontSize: 30,
+          fontWeight: 800,
+        }}
+      >
+        <span>
+          Nota 1000 <span style={{ color: COR.azul }}>AI</span>
+        </span>
+        <Progresso numero={numero} />
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: zona.topo,
+          bottom: zona.base,
+          left: MARGEM,
+          right: zona.direita,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {children}
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: zona.dica,
+          right: zona.direita,
+          fontSize: 32,
+          fontWeight: 700,
+          color: COR.fraca,
+        }}
+      >
+        {numero < TOTAL_SLIDES ? "Arraste →" : ""}
+      </div>
+    </AbsoluteFill>
+  );
+};

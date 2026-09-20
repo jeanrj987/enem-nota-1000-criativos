@@ -1,6 +1,6 @@
 # Legendas do carrossel "Nota 640"
 
-Postar os 10 slides de `out/carrossel/` na ordem `slide-01` a `slide-10`.
+Postar os 10 slides na ordem 01 a 10: `out/carrossel/` (4:5) no Instagram e no Facebook, `out/tiktok/` (9:16, com margens seguras do TikTok) no TikTok.
 Substitua `[LINK]` pelo link de vendas onde a rede permitir link clicável.
 
 ## Instagram (feed, carrossel)
