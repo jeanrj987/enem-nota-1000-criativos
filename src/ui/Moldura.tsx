@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AbsoluteFill, useVideoConfig } from "remotion";
 import { KARLA } from "../fonts";
+import { AnimarContext, Revela } from "./Animacao";
 import { ALTURA, COR, MARGEM, TOTAL_SLIDES } from "../tokens";
 
 type Props = {
@@ -32,6 +33,7 @@ const Progresso: React.FC<{ numero: number }> = ({ numero }) => (
 // Fundo, marca, progresso e dica de "arraste" comuns a todos os slides.
 export const Moldura: React.FC<Props> = ({ numero, children }) => {
   const { width, height } = useVideoConfig();
+  const animar = useContext(AnimarContext);
   const zona = height > ALTURA ? ZONA_TIKTOK : ZONA_FEED;
   const topoMarca = height > ALTURA ? 150 : 64;
 
@@ -75,7 +77,9 @@ export const Moldura: React.FC<Props> = ({ numero, children }) => {
           justifyContent: "center",
         }}
       >
-        {children}
+        {animar
+          ? React.Children.map(children, (filho, i) => <Revela indice={i}>{filho}</Revela>)
+          : children}
       </div>
       <div
         style={{
@@ -87,7 +91,7 @@ export const Moldura: React.FC<Props> = ({ numero, children }) => {
           color: COR.fraca,
         }}
       >
-        {numero < TOTAL_SLIDES ? "Arraste →" : ""}
+        {numero < TOTAL_SLIDES && !animar ? "Arraste →" : ""}
       </div>
     </AbsoluteFill>
   );

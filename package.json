@@ -27,6 +27,7 @@
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "render:carrossel": "node scripts/renderizar.mjs",
+    "render:video": "remotion render src/index.ts video-tiktok out/video/nota-640-vertical.mp4",
     "lint": "eslint src && tsc"
   },
   "sideEffects": [
